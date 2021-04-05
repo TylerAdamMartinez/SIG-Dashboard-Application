@@ -7,7 +7,7 @@ from pandas_datareader import data as pdr
 
 
 import graphing 
-
+import cryptoData as cD
 
 
 def stockData():
@@ -16,15 +16,20 @@ def stockData():
     start = input('Start Date: ')
     end = input('End Date: ')
     data = pdr.get_data_yahoo(stock,start=start, end=end)
-    adj_close = data['Adj Close']
-    print(adj_close)
-    print(data)
+    close = np.array(data['Close'])
+    print(close)
+    print(np.size(close))
 
-    return data
+    dates = cD.createDates(start, end)[:-1]
+    print(dates)
+    print(np.size(dates))
+    
+
+    return data,dates 
 
 
-stockdata = stockData()
+stockdata, dates = stockData()
 
-graphing.graph(stockdata)
+graphing.graph(dates, stockdata)
 
 
