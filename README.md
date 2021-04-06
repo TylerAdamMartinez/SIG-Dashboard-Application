@@ -1,5 +1,5 @@
 # SIG Application
-This repository contains the code base for the SIG application that Logan's 2021 Team ( [Tyler Adam Martinez](https://github.com/TylerAdamMartinez "Tyler's Amazing Github profile") and [Svenn](https://github.com/svennm "Svenn's Even better Github profile") ) created.<br> The program was designed for junior analysts in the SIG junior analyst program. 
+This repository contains the code base for the SIG application that Logan's 2021 Team ( [Tyler Adam Martinez](https://github.com/TylerAdamMartinez "Tyler's Amazing Github profile") and [Svenn Mivedor](https://github.com/svennm "Svenn's Even better Github profile") ) created.<br> The program was designed for junior analysts in the SIG junior analyst program. 
 
 ### Ideal for Future Development by future SIG junior analysts
 
@@ -22,7 +22,7 @@ This repository contains the code base for the SIG application that Logan's 2021
 `pip3 install yfinance` <br>
 `pip3 install kivy` <br>
 
-## Graphly display date about Cryptocurrencies and Stocks
+## Graphly display data about Cryptocurrencies and Stocks
 ### Graphic Interfaces
 * **Rich** | *Stylized Terminal* 
 * **Kivy** | *Cross-platform GUI*
@@ -34,6 +34,7 @@ This repository contains the code base for the SIG application that Logan's 2021
 
 ## Gallery of SIG Application
 
+![Stylized Terminal](Gallery/Stylized%20Terminal.png)
 
 ##### README.md last updated April 6, 2021
 
