@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
+import mplfinance as mpf
 import numpy as np
 import pandas as pd
 from rich.table import Table
 from rich import print
+
+"""""""""  Single Asset Graphing """""""""""
 
 def graph(price_array, time_array, graphtitle = "Price of asset over time",  yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
 	""" First parameter is for the price array and the second is for the time array"""
@@ -25,7 +28,22 @@ def graph(price_array, time_array, graphtitle = "Price of asset over time",  yax
 	plt.show()
 	print("[bold red][Exiting\t][/bold red] graph\n")
 
+def candlesticks_graph(price_array, time_array, graphtitle = "Price of asset over time",  yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
+	""" First parameter is for the price array and the second is for the time array"""
+	
+	#Creates the figure under the graphtitle name
+	fig = plt.figure(graphtitle)
+	
+	#sets the background of the plot to trasparent
+	fig.patch.set_alpha(0.0)
+	ax = plt.axes()
+	ax.patch.set_alpha(0.0)
 
+	#makes the highs green and the lows red
+	plt.style.use('yahoo')
+	
+
+"""""""""  Multiple Assets Graphing """""""""""
 
 def subcompare(assets_array, subplot_title = "The prices over time:", yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
 	"""Compares multiple assets in one price over time graph. (Parameter: Expects a Matrix)"""
@@ -134,4 +152,3 @@ def graphcompare(assets_array, figure_title =  "The prices over time:\n", yaxist
 	print(f"[bold yellow][Title\t\t][/bold yellow] {title}")
 	plt.show()
 	print("[bold red][Exiting\t][/bold red] graphcompare graph\n")
-
