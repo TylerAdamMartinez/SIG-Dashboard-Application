@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-import mplfinance as mpf
 import numpy as np
 import pandas as pd
 from rich.table import Table
@@ -29,38 +28,8 @@ def graph(price_array, time_array, graphtitle = "Price of asset over time",  yax
 	plt.show()
 	print("[bold red][Exiting\t][/bold red] graph\n")
 
-def candlesticks_graph(asset_dataframe, graphtitle = "Price of asset over time",  yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
-	""" First parameter is for the asset date in pandas Datatable where the dates are the indexes """
-	
-	#Creates the figure
-	fig = go.Figure(
-		data = [
-			go.Candlestick(
-				x = asset_dataframe.index,
-				low = asset_dataframe['Low'], 
-				high = asset_dataframe['High'],
-				close = asset_dataframe['Close'],
-				open = asset_dataframe['Open'],
-				
-				#makes the highs green and the lows red
-				increasing_line_color = 'green',
-				decreasing_line_color = 'red'
-			)
-		]
-	)
-	fig.update_layout(
-		title = graphtitle,
-		yaxis_title = yaxistitle,
-		xaxis_title = xaxistitle
-	)
 
-	#sets up the graph and displays it to the screen in the figure
-	print("[bold purple][Displaying\t][/bold purple] candlestick graph")
-	print(f"[bold yellow][Title:\t\t][/bold yellow] {graphtitle}")
-	fig.show()
-	print("[bold red][Exiting\t][/bold red] graph\n")
 
-	
 
 """""""""  Multiple Assets Graphing """""""""""
 
