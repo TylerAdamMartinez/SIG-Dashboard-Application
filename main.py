@@ -18,7 +18,7 @@ import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 from datetime import date
 today = date.today()
@@ -46,9 +46,10 @@ app.layout = html.Div(
     
     [
         html.H1("SIG Application", style={'text-align': 'center'}),
-        html.Div(
+        html.Br(),
+        dbc.Row(
             children = [
-                html.Div(
+                dbc.Col(
                     className="Asset_type",
                     children = [
                         dbc.InputGroup([ 
@@ -62,8 +63,10 @@ app.layout = html.Div(
                         ),
                         dbc.InputGroupAddon("Asset Type", addon_type="append"),
                         ]),
-                    ]),
-                html.Div(
+                    ],
+                    width=2,
+                    ),
+                dbc.Col(
                     className="Input",
                     children=[
                         dbc.InputGroup([
@@ -77,25 +80,36 @@ app.layout = html.Div(
                             addon_type="append",
                             )
                         ]),
-                    ]),
-                html.Div(
+                    ],
+                    width=8,
+                    ),
+                dbc.Col(
                     className="DatePicker",
                     children = [
-                            dcc.DatePickerRange(
-                            id="date_range",
-                            is_RTL=True,
-                            display_format="MMMM DD, YYYY",
-                            start_date=today,
-                            end_date_placeholder_text=today_last_year, 
-                            style={'width': '100%', 'height': '30px'} 
-                        )
-                    ]
+                            dbc.Button(
+                                "Dates",
+                                id="Choose_Dates_Collapse_Btn",
+                                block=True
+                            ),
+                            dbc.Collapse(
+                                dbc.Card(
+                                    dcc.DatePickerRange(
+                                        id="date_range",
+                                        is_RTL=True,
+                                        display_format="MMMM DD, YYYY",
+                                        start_date=today,
+                                        end_date_placeholder_text=today_last_year, 
+                                        with_portal=True
+                                    )                                    
+                                ),
+                                id="date_range_collapse"
+                            )
+                    ],
+                    width=2,
                 )                
             ],
-            style={
-                'display':'grid',
-                'grid-template-columns':'1fr 1fr 1fr'
-            }
+            justify="center",
+            no_gutters=True,
         ),
         html.Br(),
         dbc.Tabs(
@@ -109,6 +123,7 @@ app.layout = html.Div(
         
         ),
         html.Div(id='tabs-content'),
+        html.Br(),
         html.Footer("Created By Tyler Adam Martinez and Svenn Mivedor",
             style={
                 'text-align': 'center',
@@ -118,7 +133,7 @@ app.layout = html.Div(
 )
 
 @app.callback(
-    Output('tabs-content', 'children'),
+    Output('tabs-content', 'children'), 
     Input('tabs', 'active_tab'), 
 )
 
@@ -150,4 +165,16 @@ def render_content(tab):
             )
         ]
         return stock_plot_div
+
+@app.callback(
+    Output('date_range_collapse', 'is_open'),
+    Input('Choose_Dates_Collapse_Btn', 'n_clicks'),
+    State('date_range_collapse', 'is_open'),
+)
+
+def toggle_date_picker(n, is_open):
+    if n:
+        return not is_open
+    return is_open
+
 app.run_server(debug=True)

@@ -22,7 +22,7 @@ def plot(time_array, price_array, plottitle = "Price of asset over time",  yaxis
 		title = plottitle,
 		yaxis_title = yaxistitle,
 		xaxis_title = xaxistitle, 
-		#This will be useful for dark mode => #template="plotly_dark"
+		template="plotly_dark"
 	)
 	print("[bold purple][Displaying\t][/bold purple] plot")
 	print(f"[bold yellow][Title:\t\t][/bold yellow] {plottitle}")
@@ -61,7 +61,7 @@ def stock_plot(time_array, stock_dataTable, plottitle = "Price of asset over tim
 		title = plottitle,
 		yaxis_title = yaxistitle,
 		xaxis_title = xaxistitle, 
-		#This will be useful for dark mode => #template="plotly_dark"
+		template="plotly_dark"
 	)
 	print("[bold purple][Displaying\t][/bold purple] plot")
 	print(f"[bold yellow][Title:\t\t][/bold yellow] {plottitle}")
@@ -92,7 +92,7 @@ def candlesticks_plot(asset_dataframe, plottitle = "Price of asset over time",  
 		title = plottitle,
 		yaxis_title = yaxistitle,
 		xaxis_title = xaxistitle,
-		#This will be useful for dark mode => #template="plotly_dark"
+		template="plotly_dark"
 	)
 
 	#sets up the graph and displays it to the screen in the figure
