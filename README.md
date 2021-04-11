@@ -19,7 +19,6 @@ This repository contains the code base for the SIG application that Logan's 2021
 `pip3 install pandas` <br>
 
 ### BACKEND (APIs)
-`pip3 install cryptocompare` <br>
 `pip3 install yfinance` <br>
 
 ### FRONTEND
@@ -35,17 +34,23 @@ This repository contains the code base for the SIG application that Logan's 2021
 * **Matplotlib** pyplot | *Graphs*
 * **Plotly** graph_objects | *Plots*
 ### APIs
-* **[CryptoCompare](https://min-api.cryptocompare.com/ "Crypto Currency API Documentation Page")** | *Cryptocurrenies data*
-* **[yfinance](https://pypi.org/project/yfinance/ "pypi yfinance Project Page")** | *Stocks data*
+* **[yfinance](https://pypi.org/project/yfinance/ "pypi yfinance Project Page")** | *Market data*
 
 
 ## Gallery of SIG Application
 
 ### Stylized Terminal
+
+#### Unit Testings
 ![Stylized Terminal](Gallery/Stylized%20Terminal.png)
 
 ### Front End 
-![Front End](Gallery/SIG_APPLICATION_FRONT-END.png)
+
+#### Candlesticks Plot
+![Candlesticks Plot](Gallery/SIG-Application(Front-End)-Candlesticks-plot.png)
+
+#### Stats Plot
+![Stats Plot](Gallery/SIG-Application(Front-End)-Stats-plot.png)
 
 ##### README.md last updated April 11, 2021
 
