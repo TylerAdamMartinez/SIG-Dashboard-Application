@@ -9,24 +9,31 @@ This repository contains the code base for the SIG application that Logan's 2021
 
 #### Current Versions
 * Python 3.9.1
-* Kivy 2.0.0
-
 
 ## Required Python Libaraies
 
+### CALCULATIONS
 `pip3 install matplotlib` <br>
+`pip3 install plotly` <br>
 `pip3 install numpy` <br>
 `pip3 install pandas` <br>
-`pip3 install rich` <br>
+
+### BACKEND (APIs)
 `pip3 install cryptocompare` <br>
 `pip3 install yfinance` <br>
-`pip3 install kivy` <br>
+
+### FRONTEND
+`pip3 install rich` <br>
+`pip3 install dash` <br>
+`pip3 install dash-bootstrap-components` <br>
+
 
 ## Graphly display data about Cryptocurrencies and Stocks
 ### Graphic Interfaces
 * **Rich** | *Stylized Terminal* 
-* **Kivy** | *Cross-platform GUI*
+* **Dash** | *Web GUI*
 * **Matplotlib** pyplot | *Graphs*
+* **Plotly** graph_objects | *Plots*
 ### APIs
 * **[CryptoCompare](https://min-api.cryptocompare.com/ "Crypto Currency API Documentation Page")** | *Cryptocurrenies data*
 * **[yfinance](https://pypi.org/project/yfinance/ "pypi yfinance Project Page")** | *Stocks data*
@@ -34,7 +41,11 @@ This repository contains the code base for the SIG application that Logan's 2021
 
 ## Gallery of SIG Application
 
+### Stylized Terminal
 ![Stylized Terminal](Gallery/Stylized%20Terminal.png)
 
-##### README.md last updated April 6, 2021
+### Front End 
+![Front End](Gallery/SIG_APPLICATION_FRONT-END.png)
+
+##### README.md last updated April 11, 2021
 
