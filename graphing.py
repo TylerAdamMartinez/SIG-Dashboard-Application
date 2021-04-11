@@ -7,7 +7,7 @@ from rich import print
 
 """""""""  Single Asset Graphing """""""""""
 
-def graph(price_array, time_array, graphtitle = "Price of asset over time",  yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
+def graph(price_array, time_array, graphtitle = "Price of asset over time",  yaxistitle = 'Price (USD)', xaxistitle = 'Time (Months)'):
 	""" First parameter is for the price array and the second is for the time array"""
 	
 	#Creates the figure under the graphtitle name
@@ -33,7 +33,7 @@ def graph(price_array, time_array, graphtitle = "Price of asset over time",  yax
 
 """""""""  Multiple Assets Graphing """""""""""
 
-def subcompare(assets_array, subplot_title = "The prices over time:", yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
+def subcompare(assets_array, subplot_title = "The prices over time:", yaxistitle = 'Price (USD)', xaxistitle = 'Time (Months)'):
 	"""Compares multiple assets in one price over time graph. (Parameter: Expects a Matrix)"""
 	number_of_assets = len(assets_array[0])
 
@@ -80,7 +80,7 @@ def subcompare(assets_array, subplot_title = "The prices over time:", yaxistitle
 	plt.show()
 	print("[bold red][Exiting\t][/bold red] subcompare graph\n")
 
-def figcompare(assets_array, figure_title =  "The prices over time:\n", yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
+def figcompare(assets_array, figure_title =  "The prices over time:\n", yaxistitle = 'Price (USD)', xaxistitle = 'Time (Months)'):
 	"""Compares multiple assets in multiple price over time graph. (Parameter: Expects a Matrix)"""
 	number_of_assets = len(assets_array[0])
 
@@ -109,7 +109,7 @@ def figcompare(assets_array, figure_title =  "The prices over time:\n", yaxistit
 	print("[bold red][Exiting\t][/bold red] figcompare graph\n")
 
 
-def graphcompare(assets_array, figure_title =  "The prices over time:\n", yaxistitle = 'Price (USD)', xaxistitle = 'Time (months)'):
+def graphcompare(assets_array, figure_title =  "The prices over time:\n", yaxistitle = 'Price (USD)', xaxistitle = 'Time (Months)'):
 	"""Compares multiple assets in one price over time graph. (Parameter: Expects a Matrix)"""
 	number_of_assets = len(assets_array[0])
 

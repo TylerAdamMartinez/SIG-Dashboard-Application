@@ -21,26 +21,18 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
 from datetime import date
-today = date.today()
+today = date.today().strftime("%Y-%m-%d")
 import datetime
 last_year = datetime.datetime.now().year - 1
 this_month = datetime.datetime.now().month
 this_day = datetime.datetime.now().day
-today_last_year = datetime.datetime(last_year, this_month, this_day).strftime("%B %d, %Y")
-
-
-#TESTING DATA
-asset_dataframe = sd.stockData("googl", "2020-04-10", "2021-04-10")
-fig_price_plot = plt.plot(asset_dataframe.index, asset_dataframe['Close'])
-fig_stock_plot = plt.stock_plot(asset_dataframe.index, asset_dataframe)
-fig_candlestick = plt.candlesticks_plot(asset_dataframe, "Candlesticks Plot of Google")
-
+today_last_year = datetime.datetime(last_year, this_month, this_day).strftime("%Y-%m-%d")
 
 Dark_Mode = dbc.themes.DARKLY
 Light_Mode = dbc.themes.LITERA
 
 #Dashborad Layout
-app = dash.Dash(external_stylesheets=[Dark_Mode])
+app = dash.Dash(external_stylesheets=[Dark_Mode], suppress_callback_exceptions=True)
 app.title = "SIG Application"
 app.layout = html.Div(
     
@@ -48,31 +40,15 @@ app.layout = html.Div(
         html.H1("SIG Application", style={'text-align': 'center'}),
         html.Br(),
         dbc.Row(
-            children = [
-                dbc.Col(
-                    className="Asset_type",
-                    children = [
-                        dbc.InputGroup([ 
-                        dbc.Select(
-                            id="asset_type", 
-                            options=[
-                            {'label': 'stocks', 'value':'stock' },
-                            {'label': 'cryptocurrenices', 'value':'crypto'}],
-                            placeholder="Select an asset type",
-                            value='stock'
-                        ),
-                        dbc.InputGroupAddon("Asset Type", addon_type="append"),
-                        ]),
-                    ],
-                    width=2,
-                    ),
+            [
                 dbc.Col(
                     className="Input",
                     children=[
                         dbc.InputGroup([
                         dbc.Input(
                             id="asset_input", 
-                            placeholder="name of asset here..."
+                            placeholder="name of asset here...",
+                            value="avy"
                         ),
                         dbc.InputGroupAddon(
                             dbc.Button("Enter", 
@@ -81,7 +57,7 @@ app.layout = html.Div(
                             )
                         ]),
                     ],
-                    width=8,
+                    width=10,
                     ),
                 dbc.Col(
                     className="DatePicker",
@@ -97,9 +73,9 @@ app.layout = html.Div(
                                         id="date_range",
                                         is_RTL=True,
                                         display_format="MMMM DD, YYYY",
-                                        start_date=today,
-                                        end_date_placeholder_text=today_last_year, 
-                                        with_portal=True
+                                        start_date=today_last_year,
+                                        end_date=today, 
+                                        with_portal=True,
                                     )                                    
                                 ),
                                 id="date_range_collapse"
@@ -112,45 +88,54 @@ app.layout = html.Div(
             no_gutters=True,
         ),
         html.Br(),
-        dbc.Tabs(
-            id="tabs",
-            active_tab="candlestick",
-            children=[
-                dbc.Tab(label="Candlestick", tab_id="candlestick"),
-                dbc.Tab(label="Price Plot", tab_id="price_plot"),
-                dbc.Tab(label="Stock Plot", tab_id="stock_plot")
+        html.Div(
+            children = [
+                dbc.Tabs(
+                    id="tabs",
+                    active_tab="candlestick",
+                    children=[
+                        dbc.Tab(label="Candlesticks Plot", tab_id="candlesticks_plot"),
+                        dbc.Tab(label="Stats Plot", tab_id="stats_plot")
+                    ]
+                ),
+                html.Div(id='tabs-content'), 
             ]
-        
         ),
-        html.Div(id='tabs-content'),
         html.Br(),
-        html.Footer("Created By Tyler Adam Martinez and Svenn Mivedor",
-            style={
-                'text-align': 'center',
-                'bottom': '10px'
-            })
+        html.Footer("Created By Tyler Adam Martinez and Svenn Mivedor", style={'text-align':'center'})
     ]
 )
 
+
+#This will change the asset, therefore, changing the data on the plot, and depending on which tab is selected it will show you a different type of graph 
 @app.callback(
-    Output('tabs-content', 'children'), 
-    Input('tabs', 'active_tab'), 
+    Output('tabs-content', 'children'),
+    [
+        Input('asset_input_submit_btn', 'n_clicks'), 
+        Input('asset_input', 'value'), 
+        Input('date_range', 'start_date'),
+        Input('date_range', 'end_date'),
+        Input('tabs', 'active_tab')
+    ]
 )
 
-def render_content(tab):
-    if tab == 'candlestick':
+def render_tabs_content(asset_input_submit_btn, asset_input, start_date, end_date, tab):
+    #If stock will retrive data from the stock API, if crypto then retrive data from the crypto API
+    asset_dataframe = sd.stockData(asset_input, start_date, end_date)
+
+    if tab == 'candlesticks_plot':
+        fig_candlestick = plt.candlesticks_plot(asset_dataframe)
         return dcc.Graph(figure=fig_candlestick)
-    elif tab == 'price_plot':
-        return dcc.Graph(figure=fig_price_plot)
-    elif tab == 'stock_plot':
-        stock_plot_div = [
+    elif tab == 'stats_plot':
+        fig_stock_plot = plt.stock_plot(asset_dataframe.index, asset_dataframe)
+        stats_plot_div = [
             html.Div(
-                id="stock_plot_div",
+                id="stats_plot_div",
                 children=[
                     dcc.Graph(figure=fig_stock_plot),
                     dbc.Label("Toggle Lines"),
                     dbc.Checklist(
-                        id="stock_plot_lines",
+                        id="stats_plot_lines",
                         options=[
                             {'label': 'Low', 'value': 'Low'},
                             {'label': 'High', 'value': 'High'},
@@ -164,8 +149,10 @@ def render_content(tab):
                 ]
             )
         ]
-        return stock_plot_div
+        return stats_plot_div
 
+
+#This will toggle the date picker from showing to hidden
 @app.callback(
     Output('date_range_collapse', 'is_open'),
     Input('Choose_Dates_Collapse_Btn', 'n_clicks'),
