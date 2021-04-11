@@ -3,17 +3,16 @@ import graphing as grph
 import plotting as plt
 
 #data retrieval 
-import cryptoData as cd
-import stockData as sd
+import Market_Data as md
 
 #libaraies for Testing
 import numpy as np
 from rich.console import Console
 
 
-
+""" THIS WILL NEED TO BE COMPLETELY REDONE TO USE Market_Data 
 def Basic_Graphing_Test():
-    """ Will systemically create data and graph the data on each one of the graphing functions """
+    "" Will systemically create data and graph the data on each one of the graphing functions "
     console = Console()
     print("\n")
     console.print("Basic Graphing Test", style="bold white on blue", justify="center")
@@ -45,6 +44,7 @@ def Basic_Graphing_Test():
     grph.subcompare(assets_array)
 
     console.print("Test Finnished", style="bold white on blue", justify="center")
+"""
 
 def Basic_Ploting_Test():
     """ Will systemically create data and plot the data on each one of the plotting functions """
@@ -59,7 +59,7 @@ def Basic_Ploting_Test():
     asset = "avy"
    
     #single asset test
-    avy_stock_data = sd.stockData(asset, startingDate, endingDate)
+    avy_stock_data = md.stockData(asset, startingDate, endingDate)
 
     #demostrates the graph
     plt.candlesticks_plot(avy_stock_data)
