@@ -21,11 +21,12 @@ def plot(price_array, time_array, plottitle = "Price of asset over time",  yaxis
 	fig.update_layout(
 		title = plottitle,
 		yaxis_title = yaxistitle,
-		xaxis_title = xaxistitle
+		xaxis_title = xaxistitle, 
+		template="plotly_dark"
 	)
 	print("[bold purple][Displaying\t][/bold purple] plot")
 	print(f"[bold yellow][Title:\t\t][/bold yellow] {plottitle}")
-	fig.show()
+	return fig
 	print("[bold red][Exiting\t][/bold red] plot\n")
 
 
@@ -49,15 +50,17 @@ def candlesticks_plot(asset_dataframe, plottitle = "Price of asset over time",  
 		]
 	)
 	fig.update_layout(
+		xaxis_rangeslider_visible=False,
 		title = plottitle,
 		yaxis_title = yaxistitle,
-		xaxis_title = xaxistitle
+		xaxis_title = xaxistitle,
+		template="plotly_dark"
 	)
 
 	#sets up the graph and displays it to the screen in the figure
 	print("[bold purple][Displaying\t][/bold purple] candlestick plot")
 	print(f"[bold yellow][Title:\t\t][/bold yellow] {plottitle}")
-	fig.show()
+	return fig
 	print("[bold red][Exiting\t][/bold red] plot\n")
 
 	

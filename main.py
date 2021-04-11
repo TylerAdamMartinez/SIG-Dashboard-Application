@@ -1,66 +1,109 @@
+#data visualization
 import graphing as grph
 import plotting as plt
+
+#data retrieval 
 import cryptoData as cd
 import stockData as sd
-import numpy as np
-from rich.console import Console
+
+#Used for Test Driven Development
+import Unit_Testing as ut
+
+"""
+TODO:
+This code below will be in it's own file once finnished
+"""
+#Create Dashboard
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
 
 
-def Basic_Graphing_Test():
-    """ Will systemically create data and graph the data on each one of the graphing functions """
-    console = Console()
-    console.print("Basic Graphing Test", style="bold white on blue", justify="center")
-    console.print("Starting Test", style="bold white on blue", justify="center")
+#TESTING DATA
+asset_dataframe = sd.stockData("googl", "2021-01-01", "2021-02-02")
+fig_plot = plt.plot(asset_dataframe.index , asset_dataframe['Close'])
+fig_candlestick = plt.candlesticks_plot(asset_dataframe)
 
-    #Testing data
-    startingDate = "2021-02-19"
-    endingDate = "2021-03-21"
-    datelist = cd.createDates(startingDate, endingDate)
+#Dashborad Layout
+app = dash.Dash()
+app.layout = html.Div(
+    
+    [
+        html.H1("SIG Application", style={'text-align': 'center'}),
+        html.Div(
+            children = [
+                html.Div(
+                    className="Asset_type",
+                    children = [
+                        dcc.Dropdown(
+                            id="asset_type", 
+                            options=[
+                            {'label': 'stocks', 'value':'stock' },
+                            {'label': 'cryptocurrenices', 'value':'crypto'}],
+                            placeholder="Select an asset type",
+                            value='stock'
+                        ) 
+                    ]),
+                html.Div(
+                    className="Input",
+                    children=[
+                        dcc.Input(
+                            id="asset_input"
+                        ),
+                        html.Button(
+                            'Submit',
+                            id="asset_input_submit_btn"
+                        )                  
+                    ]),
+                html.Div(
+                    className="DatePicker",
+                    children = [
+                            dcc.DatePickerRange(
+                            id="date_range",
+                            start_date_placeholder_text="Select a date",
+                            end_date="2021-03-03"
+                        )
+                    ]
+                )                
+            ],
+            style={
+                'display':'grid',
+                'grid-template-columns':'auto auto auto'
+            }
+        ),
+        dcc.Tabs(
+            id="tabs",
+            value="candlestick",
+            children=[
+                dcc.Tab(label="Candlestick", value="candlestick"),
+                dcc.Tab(label="Simple Plot", value="simple_plot")
+            ]
+        
+        ),
+        html.Div(id='tabs-content'),
+        html.Footer("Created By Tyler Adam Martinez and Svenn Mivedor",style={'text-align': 'center'})
+    ]
+)
 
-    #single asset test
-    prices_of_ETH = cd.getPricelist('ETH', datelist)
-    asset_array = ['ETH', datelist, prices_of_ETH]
+@app.callback(Output('tabs-content', 'children'), Input('tabs', 'value'))
 
-    #demostrates the graph
-    grph.graph(asset_array[1], asset_array[2], "Price of ETH over time")
-
-    #multi-assets test
-    crypto_arr = np.array(['LINK','ETH','XRP','ADA', 'DOGE'])
-    prices_of_assets = cd.getPricelists(crypto_arr, datelist)
-    dates = []
-    for i in range(len(crypto_arr)):
-        dates.append(datelist)
-    assets_array = [crypto_arr, dates, prices_of_assets]
-
-    #demostrates the graphing compare functions
-    grph.figcompare(assets_array)
-    grph.graphcompare(assets_array)
-    grph.subcompare(assets_array)
-
-    console.print("Test Finnished", style="bold white on blue", justify="center")
-
-def Basic_Ploting_Test():
-    """ Will systemically create data and plot the data on each one of the plotting functions """
-    console = Console()
-    console.print("Basic Plotting Test", style="bold white on blue", justify="center")
-    console.print("Starting Test", style="bold white on blue", justify="center")
-
-    #Testing data
-    startingDate = "2021-02-19"
-    endingDate = "2021-03-21"
-    asset = "avy"
-   
-    #single asset test
-    avy_stock_data = sd.stockData(asset, startingDate, endingDate)
-
-    #demostrates the graph
-    plt.candlesticks_plot(avy_stock_data)
-    plt.plot(avy_stock_data.index , avy_stock_data['Close'])
-
-    console.print("Test Finnished", style="bold white on blue", justify="center")
-
-
-
-Basic_Ploting_Test()
-print("\n")
-Basic_Graphing_Test()
+def render_content(tab):
+    if tab == 'candlestick':
+        return dcc.Graph(figure=fig_candlestick)
+    elif tab == 'simple_plot':
+        simple_plot_div = [
+            dcc.Checklist(
+                options=[
+                    {'label': 'Low', 'value': 'Low'},
+                    {'label': 'High', 'value': 'High'},
+                    {'label': 'Open', 'value': 'Open'},
+                    {'label': 'Close', 'value': 'Close', 'disabled': True}
+                ],
+                value=['Close'],
+                labelStyle={'display': 'inline-block'}
+            ),
+            dcc.Graph(figure=fig_plot)
+        ]
+        return simple_plot_div
+app.run_server(debug=True)
