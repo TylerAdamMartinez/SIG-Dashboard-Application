@@ -15,6 +15,7 @@ This code below will be in it's own file once finnished
 """
 #Create Dashboard
 import dash
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -34,8 +35,13 @@ fig_price_plot = plt.plot(asset_dataframe.index, asset_dataframe['Close'])
 fig_stock_plot = plt.stock_plot(asset_dataframe.index, asset_dataframe)
 fig_candlestick = plt.candlesticks_plot(asset_dataframe, "Candlesticks Plot of Google")
 
+
+Dark_Mode = dbc.themes.DARKLY
+Light_Mode = dbc.themes.LITERA
+
 #Dashborad Layout
-app = dash.Dash()
+app = dash.Dash(external_stylesheets=[Dark_Mode])
+app.title = "SIG Application"
 app.layout = html.Div(
     
     [
@@ -45,27 +51,32 @@ app.layout = html.Div(
                 html.Div(
                     className="Asset_type",
                     children = [
-                        dcc.Dropdown(
+                        dbc.InputGroup([ 
+                        dbc.Select(
                             id="asset_type", 
                             options=[
                             {'label': 'stocks', 'value':'stock' },
                             {'label': 'cryptocurrenices', 'value':'crypto'}],
                             placeholder="Select an asset type",
                             value='stock'
-                        ) 
+                        ),
+                        dbc.InputGroupAddon("Asset Type", addon_type="append"),
+                        ]),
                     ]),
                 html.Div(
                     className="Input",
                     children=[
-                        dcc.Input(
+                        dbc.InputGroup([
+                        dbc.Input(
                             id="asset_input", 
-                            style={'width': '80%', 'height': '30px', 'padding': '0px', 'margin': '0px'}
+                            placeholder="name of asset here..."
                         ),
-                        html.Button(
-                            'Submit',
-                            id="asset_input_submit_btn",
-                            style={'width': '19%', 'height': '35px'}
-                        )                  
+                        dbc.InputGroupAddon(
+                            dbc.Button("Enter", 
+                            id="asset_input_submit_btn"),
+                            addon_type="append",
+                            )
+                        ]),
                     ]),
                 html.Div(
                     className="DatePicker",
@@ -87,13 +98,13 @@ app.layout = html.Div(
             }
         ),
         html.Br(),
-        dcc.Tabs(
+        dbc.Tabs(
             id="tabs",
-            value="candlestick",
+            active_tab="candlestick",
             children=[
-                dcc.Tab(label="Candlestick", value="candlestick"),
-                dcc.Tab(label="Price Plot", value="price_plot"),
-                dcc.Tab(label="Stock Plot", value="stock_plot")
+                dbc.Tab(label="Candlestick", tab_id="candlestick"),
+                dbc.Tab(label="Price Plot", tab_id="price_plot"),
+                dbc.Tab(label="Stock Plot", tab_id="stock_plot")
             ]
         
         ),
@@ -108,7 +119,7 @@ app.layout = html.Div(
 
 @app.callback(
     Output('tabs-content', 'children'),
-    Input('tabs', 'value'), 
+    Input('tabs', 'active_tab'), 
 )
 
 def render_content(tab):
@@ -122,7 +133,8 @@ def render_content(tab):
                 id="stock_plot_div",
                 children=[
                     dcc.Graph(figure=fig_stock_plot),
-                    dcc.Checklist(
+                    dbc.Label("Toggle Lines"),
+                    dbc.Checklist(
                         id="stock_plot_lines",
                         options=[
                             {'label': 'Low', 'value': 'Low'},
@@ -131,7 +143,8 @@ def render_content(tab):
                             {'label': 'Close', 'value': 'Close'}
                         ],
                         value=['Low', 'High', 'Open', 'Close'],
-                        labelStyle={'display': 'inline-block'}
+                        inline=True,
+                        switch=True,
                     )                   
                 ]
             )
