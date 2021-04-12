@@ -102,3 +102,67 @@ def candlesticks_plot(asset_dataframe, plottitle = "Price of asset over time",  
 	print("[bold red][Exiting\t][/bold red] plot\n")
 
 	
+def volume_plot(asset_dataframe, plottitle = "Trading Volume of asset over time",  yaxistitle = 'Number of Trades', xaxistitle = 'Time (Months)'):
+	""" First parameter is for the asset date in pandas Datatable where the dates are the indexes """
+	
+	#Creates the figure
+	fig = go.Figure(
+		data = [
+			go.Scatter(
+				x = asset_dataframe.index,
+				y = asset_dataframe['Volume'],
+				name="Volume",
+				stackgroup='one',
+				
+			)
+		]
+	)
+	fig.update_layout(
+		title = plottitle,
+		yaxis_title = yaxistitle,
+		xaxis_title = xaxistitle,
+		template="plotly_dark"
+	)
+
+	#sets up the graph and displays it to the screen in the figure
+	print("[bold purple][Displaying\t][/bold purple] volume plot")
+	print(f"[bold yellow][Title:\t\t][/bold yellow] {plottitle}")
+	return fig
+	print("[bold red][Exiting\t][/bold red] plot\n")
+
+def stats_table(asset_dataframe, tabletitle = "Stats of asset in a table format"):
+	""" First parameter is for the asset date in pandas Datatable where the dates are the indexes """
+	rowEvenColor = 'grey'
+	rowOddColor = 'darkgrey'
+
+	#Creates the figure
+	fig = go.Figure(
+		data = [
+			go.Table(
+				header=dict(values=list(["Dates", "Low", "High", "Close", "Open", "Volume", "Adj Close"]),
+							align='center'),
+				cells=dict(values=[
+								asset_dataframe.index, 
+								asset_dataframe['Low'], 
+								asset_dataframe['High'],
+								asset_dataframe['Close'],
+								asset_dataframe['Open'],
+								asset_dataframe['Volume'],
+								asset_dataframe['Adj Close'],
+							],
+						align='center',
+						fill_color = [[rowOddColor,rowEvenColor] * asset_dataframe.size],
+						)
+			)
+		]
+	)
+	fig.update_layout(
+		title = tabletitle,
+		template="plotly_dark"
+	)
+
+	#sets up the graph and displays it to the screen in the figure
+	print("[bold purple][Displaying\t][/bold purple] stats table")
+	print(f"[bold yellow][Title:\t\t][/bold yellow] {tabletitle}")
+	return fig
+	print("[bold red][Exiting\t][/bold red] table\n")
