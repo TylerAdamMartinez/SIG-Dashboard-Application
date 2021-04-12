@@ -47,10 +47,16 @@ This repository contains the code base for the SIG application that Logan's 2021
 ### Front End 
 
 #### Candlesticks Plot
-![Candlesticks Plot](Gallery/SIG-Application(Front-End)-Candlesticks-plot.png)
+![Candlesticks Plot](Gallery/SIG-Application(Front-End)-Candlesticks-Plot.png)
 
 #### Stats Plot
-![Stats Plot](Gallery/SIG-Application(Front-End)-Stats-plot.png)
+![Stats Plot](Gallery/SIG-Application(Front-End)-Stats-Plot.png)
+
+#### Volume Plot
+![Volume Plot](Gallery/SIG-Application(Front-End)-Volume-Plot.png)
+
+#### Stats Table
+![Stats Table](Gallery/SIG-Application(Front-End)-Stats-Table.png)
 
 ##### README.md last updated April 11, 2021
 
