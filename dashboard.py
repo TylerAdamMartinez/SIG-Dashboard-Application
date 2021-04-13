@@ -75,7 +75,6 @@ app.layout = html.Div(
                 )                
             ],
             justify="center",
-            #no_gutters=True,
             style={'padding': '25px'}
         ),
         html.Div(
@@ -92,7 +91,7 @@ app.layout = html.Div(
             ],
             style={'padding': '25px'}
         ),
-        html.Div(id='volume-plot', style={'padding': '25px'}),
+        html.Div(id='volume_and_adj_close_section', style={'padding': '25px'}),
         html.Div(id='stats-table', style={'padding': '25px'}),
         html.Footer("Created By Tyler Adam Martinez and Svenn Mivedor", style={'text-align':'center'})
     ]
@@ -103,7 +102,7 @@ app.layout = html.Div(
 @app.callback(
     [ 
         Output('tabs-content', 'children'), 
-        Output('volume-plot', 'children'),
+        Output('volume_and_adj_close_section', 'children'),
         Output('stats-table', 'children'),
     ], 
     [
@@ -120,31 +119,35 @@ def render_tabs_content(asset_input_submit_btn, asset_input, start_date, end_dat
     asset_dataframe = md.stockData(asset_input, start_date, end_date)
 
     if tab == 'candlesticks_plot':
-        fig_candlestick = plt.candlesticks_plot(asset_dataframe)
-        return dcc.Graph(figure=fig_candlestick), dcc.Graph(figure=plt.volume_plot(asset_dataframe)), dcc.Graph(figure=plt.stats_table(asset_dataframe))
+        fig_candlestick = plt.candlesticks_plot(asset_dataframe, plottitle=f"Price of {asset_input} over time")
+
+        volume_and_adj_close_section = [
+            dbc.Row(
+                [
+                dbc.Col(
+                   dcc.Graph(figure=plt.volume_plot(asset_dataframe, plottitle=f"Trading volume of {asset_input} over time")) 
+                ),
+                dbc.Col(
+                    dcc.Graph(figure=plt.plot(asset_dataframe.index, asset_dataframe['Adj Close'], plottitle=f"Adjusted Close Price of {asset_input} over time"))
+                )
+                ]
+            )
+            
+        ]
+
+        return dcc.Graph(figure=fig_candlestick), volume_and_adj_close_section, dcc.Graph(figure=plt.stats_table(asset_dataframe, tabletitle=f"Stats table of {asset_input}"))
     elif tab == 'stats_plot':
-        fig_stock_plot = plt.stock_plot(asset_dataframe.index, asset_dataframe)
+        fig_stock_plot = plt.stock_plot(asset_dataframe.index, asset_dataframe, plottitle=f"Price of {asset_input} over time")
         stats_plot_div = [
             html.Div(
                 id="stats_plot_div",
                 children=[
-                    dcc.Graph(figure=fig_stock_plot),
-                    dbc.Checklist(
-                        id="stats_plot_lines",
-                        options=[
-                            {'label': 'Low', 'value': 'Low'},
-                            {'label': 'High', 'value': 'High'},
-                            {'label': 'Open', 'value': 'Open'},
-                            {'label': 'Close', 'value': 'Close'}
-                        ],
-                        value=['Low', 'High', 'Open', 'Close'],
-                        inline=True,
-                        switch=True,
-                    )                   
+                    dcc.Graph(figure=fig_stock_plot),               
                 ]
             )
         ]
-        return stats_plot_div, dcc.Graph(figure=plt.volume_plot(asset_dataframe)), dcc.Graph(figure=plt.stats_table(asset_dataframe))
+
+        return stats_plot_div, dcc.Graph(figure=plt.volume_plot(asset_dataframe, plottitle=f"Trading volume of {asset_input} over time")), dcc.Graph(figure=plt.stats_table(asset_dataframe, tabletitle=f"Stats table of {asset_input}"))
 
 
 #This will toggle the date picker from showing to hidden

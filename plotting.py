@@ -57,6 +57,11 @@ def stock_plot(time_array, stock_dataTable, plottitle = "Price of asset over tim
 		y = stock_dataTable['Open'],
 		name="Open"
 	)
+	fig.add_scatter(
+		x = time_array, 
+		y = stock_dataTable['Adj Close'],
+		name="Adjusted Close"
+	)
 	fig.update_layout(
 		title = plottitle,
 		yaxis_title = yaxistitle,
@@ -108,12 +113,10 @@ def volume_plot(asset_dataframe, plottitle = "Trading Volume of asset over time"
 	#Creates the figure
 	fig = go.Figure(
 		data = [
-			go.Scatter(
+			go.Bar(
 				x = asset_dataframe.index,
 				y = asset_dataframe['Volume'],
 				name="Volume",
-				stackgroup='one',
-				
 			)
 		]
 	)
