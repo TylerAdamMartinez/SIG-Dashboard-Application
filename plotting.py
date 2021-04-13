@@ -181,14 +181,12 @@ def financials_table(asset_financial_dataframe, tabletitle = "Stats of asset in 
 		data = [
 			go.Table(
 				header=dict(values=list(asset_financial_dataframe.columns)),
-							align='center'),
-				cells=dict(values=[
-								asset_financial_dataframe["Research Development"], 
-							],
-						align='center',
+				cells=dict(values=
+								asset_financial_dataframe["Research Development"]
+                                                                ),
 						fill_color = [[rowOddColor,rowEvenColor] * asset_financial_dataframe.size],
-						)
-			)
+                                                )	
+			
 		]
 	)
 	fig.update_layout(
