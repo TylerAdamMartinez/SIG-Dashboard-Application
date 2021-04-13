@@ -169,3 +169,35 @@ def stats_table(asset_dataframe, tabletitle = "Stats of asset in a table format"
 	print(f"[bold yellow][Title:\t\t][/bold yellow] {tabletitle}")
 	return fig
 	print("[bold red][Exiting\t][/bold red] table\n")
+
+
+def financials_table(asset_financial_dataframe, tabletitle = "Stats of asset in a table format"):
+	""" First parameter is for the asset date in pandas Datatable where the dates are the indexes """
+	rowEvenColor = 'grey'
+	rowOddColor = 'darkgrey'
+
+	#Creates the figure
+	fig = go.Figure(
+		data = [
+			go.Table(
+				header=dict(values=list(asset_financial_dataframe.columns)),
+							align='center'),
+				cells=dict(values=[
+								asset_financial_dataframe["Research Development"], 
+							],
+						align='center',
+						fill_color = [[rowOddColor,rowEvenColor] * asset_financial_dataframe.size],
+						)
+			)
+		]
+	)
+	fig.update_layout(
+		title = tabletitle,
+		template="plotly_dark"
+	)
+
+	#sets up the graph and displays it to the screen in the figure
+	print("[bold purple][Displaying\t][/bold purple] stats table")
+	print(f"[bold yellow][Title:\t\t][/bold yellow] {tabletitle}")
+	return fig
+	print("[bold red][Exiting\t][/bold red] table\n")
