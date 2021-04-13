@@ -177,12 +177,16 @@ def financials_table(asset_financial_dataframe, tabletitle = "Stats of asset in 
 	rowOddColor = 'darkgrey'
 
 	#Creates the figure
+	list_of_columns = list(asset_financial_dataframe.columns)
+	list_of_cells = list([asset_financial_dataframe.index])
+	for col in asset_financial_dataframe.shape[1]:
+		list_of_cells.append(asset_financial_dataframe.iloc[:,col])
+
 	fig = go.Figure(
 		data = [
 			go.Table(
-				header=dict(values=list(asset_financial_dataframe.columns)),
-				cells=dict(values=list([asset_financial_dataframe.index,
-                                    asset_financial_dataframe.iloc[:,1]]))
+				header=dict(values=list_of_columns),
+				cells=dict(values=list_of_cells)
                                                                 ),
                                 
 			
