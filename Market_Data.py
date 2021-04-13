@@ -12,8 +12,13 @@ def inputStockDate():
     stock_data = stockData(stock, start, end)
     return stock_data
 
-def stockData(ticker_symbol , start_date, end_date):
+def get_stockData(ticker_symbol , start_date, end_date):
     """Accepts stock ticker, start date, and end date in as string datetype. Then returns a Panda Datatable of the asset's info from the starting date to the ending date"""
     data = pdr.get_data_yahoo(ticker_symbol ,start=start_date, end=end_date)
     return data 
+
+def get_stockFinancials(ticker_symbol):
+    """Accepts stock ticker as string datetype. Then returns a Panda Datatable of the asset's financial info"""
+    fin_data = yfi.Ticker(ticker_symbol).financials
+    return fin_data
 

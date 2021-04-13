@@ -116,7 +116,7 @@ app.layout = html.Div(
 
 def render_tabs_content(asset_input_submit_btn, asset_input, start_date, end_date, tab):
     #If stock will retrive data from the stock API, if crypto then retrive data from the crypto API
-    asset_dataframe = md.stockData(asset_input, start_date, end_date)
+    asset_dataframe = md.get_stockData(asset_input, start_date, end_date)
 
     if tab == 'candlesticks_plot':
         fig_candlestick = plt.candlesticks_plot(asset_dataframe, plottitle=f"Price of {asset_input} over time")
