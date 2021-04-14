@@ -135,8 +135,6 @@ def volume_plot(asset_dataframe, plottitle = "Trading Volume of asset over time"
 
 def stats_table(asset_dataframe, tabletitle = "Stats of asset in a table format"):
 	""" First parameter is for the asset date in pandas Datatable where the dates are the indexes """
-	rowEvenColor = 'grey'
-	rowOddColor = 'darkgrey'
 
 	#Creates the figure
 	fig = go.Figure(
@@ -154,7 +152,6 @@ def stats_table(asset_dataframe, tabletitle = "Stats of asset in a table format"
 								asset_dataframe['Adj Close'],
 							],
 						align='center',
-						fill_color = [[rowOddColor,rowEvenColor] * asset_dataframe.size],
 						)
 			)
 		]
@@ -177,9 +174,9 @@ def financials_table(asset_financial_dataframe, tabletitle = "Stats of asset in 
 	rowOddColor = 'darkgrey'
 
 	#Creates the figure
-	asset_financial_dataframe['Financials Categories'] = ''
+	asset_financial_dataframe.insert(0, 'Financials Categories', asset_financial_dataframe.index)
 	list_of_columns = list( asset_financial_dataframe.columns)
-	list_of_cells = list([asset_financial_dataframe.index])
+	list_of_cells = list([])
 	for col in range(asset_financial_dataframe.shape[1]):
 		list_of_cells.append(asset_financial_dataframe.iloc[:,col])
 

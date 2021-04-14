@@ -139,12 +139,13 @@ def render_tabs_content(asset_input_submit_btn, asset_input, start_date, end_dat
         stats_tables = [
             html.Div (
                 children = [
-                   dcc.Graph(figure=plt.stats_table(asset_dataframe, tabletitle=f"Stats table of {asset_input}"))
+                   dcc.Graph(figure=plt.stats_table(asset_dataframe, tabletitle=f"Stock stats table of {asset_input}"))
                 ]
             ),
+            html.Br(),
             html.Div (
                 children = [
-                   dcc.Graph(figure=plt.financials_table(asset_financial_dataframe)) 
+                   dcc.Graph(figure=plt.financials_table(asset_financial_dataframe, tabletitle=f"Financial stats table of {asset_input}")) 
                 ]
             )
         ]
@@ -168,11 +169,13 @@ def render_tabs_content(asset_input_submit_btn, asset_input, start_date, end_dat
                    dcc.Graph(figure=plt.stats_table(asset_dataframe, tabletitle=f"Stats table of {asset_input}"))
                 ]
             ),
+            html.Br(),
             html.Div (
                 children = [
-                   dcc.Graph(figure=plt.financials_table(asset_financial_dataframe))
-                ]
-            )
+                
+                   dcc.Graph(figure=plt.financials_table(asset_financial_dataframe, tabletitle=f"Financial stats table of {asset_input}")) 
+                   ]
+                )
         ]
 
         return stats_plot_div, dcc.Graph(figure=plt.volume_plot(asset_dataframe, plottitle=f"Trading volume of {asset_input} over time")), stats_tables
