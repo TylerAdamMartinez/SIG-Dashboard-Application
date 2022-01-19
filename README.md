@@ -1,4 +1,4 @@
-# <p align="center"> SIG Application
+# <p align="center"> SIG Dashboard Application
 
 <p align="center" style="display: flex;" >
 <img src="https://visitor-badge.glitch.me/badge?page_id=tyleradammartinez.SIG-Dashboard-Application" />
@@ -6,7 +6,7 @@
 <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/tyleradammartinez/SIG-Dashboard-Application" />
 </p>
 
-This repository contains the code base for the SIG application that Logan's 2021 Team ( [Tyler Adam Martinez](https://github.com/TylerAdamMartinez "Tyler's Amazing Github profile") and [Svenn Mivedor](https://github.com/svennm "Svenn's Even better Github profile") ) created.<br> The program was designed for junior analysts in the SIG junior analyst program. 
+This repository contains the code base for the SIG Dashboard Application that Logan's 2021 Team ( <a alt="Svenn Mivedor's Github profile" href="https://github.com/svennm">Svenn Mivedor</a>, and <a alt="Tyler Adam Martinez Github profile" href="https://github.com/TylerAdamMartinez">I</a> ) created that takes any stock and/or cryptocurrency ticker symbol and will give you back historical statically data about the inputed ticker symbol across any length of time of your choosing. The program was designed for our peers in the SIG junior analyst program.
 
 ### Ideal for Future Development by future SIG junior analysts
 
